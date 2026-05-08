@@ -57,6 +57,23 @@ def route_post_to_bots(post_content: str, threshold: float = 0.5) -> List[str]:
     router = PersonaRouter()
     return router.route_post_to_bots(post_content, threshold)
 
+
+def rank_post_to_bots(post_content: str, top_k: int = 3) -> List[dict]:
+    """Return the top matching bots with similarity scores for demo/UI purposes."""
+    router = PersonaRouter()
+    query_vec = _embed(post_content).reshape(1, -1)
+    scores, indices = router.index.search(query_vec, k=min(top_k, len(router.id_to_bot)))
+
+    ranked = []
+    for score, idx in zip(scores[0], indices[0]):
+        bot_id = router.id_to_bot[idx]
+        ranked.append({
+            "bot_id": bot_id,
+            "persona": BOT_PERSONAS[bot_id],
+            "score": float(score),
+        })
+    return ranked
+
 # ---------- Phase 2: LangGraph Orchestrator ----------
 
 from typing import TypedDict, Annotated

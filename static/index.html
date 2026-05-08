@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CogniAI — Demo</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <main>
+    <h1>CogniAI — Persona Router</h1>
+
+    <label for="text">Enter text to route:</label>
+    <textarea id="text" rows="4" placeholder="Type something about crypto, AI, or markets..."></textarea>
+    <div class="controls">
+      <button id="routeBtn">Route</button>
+      <button id="clearBtn">Clear</button>
+    </div>
+
+    <section id="result" aria-live="polite"></section>
+
+    <footer>
+      <small>Backend: <a href="/api/health">/api/health</a></small>
+    </footer>
+  </main>
+
+  <script src="/static/main.js"></script>
+</body>
+</html>

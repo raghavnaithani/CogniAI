@@ -1,0 +1,14 @@
+:root{--bg:#0f1724;--card:#0b1220;--accent:#6ee7b7;--muted:#9aa4b2;--text:#e6eef6}
+*{box-sizing:border-box}
+body{font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;background:linear-gradient(180deg,var(--bg),#071127);color:var(--text);min-height:100vh;display:flex;align-items:center;justify-content:center;margin:0}
+main{width:720px;max-width:96%;background:var(--card);padding:24px;border-radius:10px;box-shadow:0 6px 30px rgba(2,6,23,.6)}
+h1{margin:0 0 12px;font-size:20px}
+label{display:block;margin-bottom:8px;color:var(--muted)}
+textarea{width:100%;padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:#071226;color:var(--text);resize:vertical}
+.controls{display:flex;gap:8px;margin-top:8px}
+button{background:var(--accent);border:none;padding:8px 12px;border-radius:8px;color:#021017;cursor:pointer}
+#result{margin-top:16px;padding:12px;border-radius:8px;background:rgba(255,255,255,0.02);min-height:40px}
+ul.ranked{margin:10px 0 0;padding-left:18px}
+ul.ranked li{margin:6px 0}
+.score{color:var(--accent);margin-left:8px}
+footer{margin-top:18px;color:var(--muted)}
