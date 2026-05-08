@@ -5,3 +5,5 @@ langchain>=0.2.0
 langchain-groq
 pydantic
 python-dotenv
+fastapi
+uvicorn[standard]
