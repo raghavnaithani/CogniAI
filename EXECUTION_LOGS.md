@@ -1,7 +1,7 @@
 # Execution Logs - AI Cognitive Loop Assignment
 
 ## Overview
-This document shows the execution output of all three phases of the Grid07 AI Engineering Assignment.
+This document shows the execution output of all three phases of the   AI Engineering Assignment.
 
 ---
 
@@ -235,7 +235,7 @@ python test_assignment.py
 ### Sample Console Output
 ```
 ======================================================================
-AI COGNITIVE LOOP - Grid07 Assignment Demo
+AI COGNITIVE LOOP -   Assignment Demo
 (Phase 1 works offline; Phases 2-3 need free Groq API key)
 ======================================================================
 
@@ -343,4 +343,4 @@ Solution:
 
 ---
 
-*Generated for the Grid07 AI Engineering Assignment. All phases demonstrated with working code.*
+*Generated for the   AI Engineering Assignment. All phases demonstrated with working code.*

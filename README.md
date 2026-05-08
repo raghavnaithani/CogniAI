@@ -1,7 +1,14 @@
-# AI Cognitive Loop Assignment - Grid07 Platform
+# AI Cognitive Loop Assignment  
 
 ## Overview
-This repository implements the three phases of the **AI Engineering Assignment** for the Grid07 platform:
+This repository now has two operating modes:
+
+1. A lightweight browser demo that runs on Vercel and routes text to the closest persona.
+2. A full local AI stack that includes FAISS, SentenceTransformers, LangGraph, and Groq for the assignment phases.
+
+The browser demo is what users see in production. The full stack is for local development and the original assignment flow.
+
+This repository implements the three phases of the **AI Engineering Assignment** for the  :
 
 1. **Phase 1 – Vector‑Based Persona Matching (Router)**
    - In‑memory FAISS index populated with embeddings of three bot personas.
@@ -29,12 +36,16 @@ This repository implements the three phases of the **AI Engineering Assignment**
 ```
 assignment/
 ├─ ai_cognitive_loop.py   # Full implementation (router, LangGraph, defense)
+├─ app.py                  # Vercel-friendly FastAPI app and demo frontend host
 ├─ router.py               # Minimal router module for quick import
-├─ test_assignment.py      # Demo script running all phases
-├─ requirements.txt        # Python dependencies
+├─ static/                 # Frontend files for the browser demo
+├─ test_assignment.py      # Demo script running all phases locally
+├─ requirements.txt        # Minimal deployment dependencies
+├─ requirements-full.txt   # Full local AI dependencies
 ├─ .env.example            # Example environment file (API keys, model config)
 ├─ .env                    # Your local environment (DO NOT COMMIT)
 ├─ execution_log.txt       # Console output showing Phase 1 routing results
+├─ .vercelignore           # Keeps local build artifacts out of Vercel uploads
 └─ README.md               # This file
 ```
 
@@ -79,6 +90,14 @@ pip install -r requirements.txt
 
 ## Running the Demo
 
+### Browser Demo
+Open the deployed app or run locally with:
+```bash
+uvicorn app:app --reload
+```
+
+The homepage lets a user enter text and see the closest bot persona.
+
 ### Without Groq Key (Phase 1 only)
 ```bash
 python test_assignment.py
@@ -97,6 +116,12 @@ All three phases will execute:
 ---
 
 ## How It Works
+
+### Browser Demo Flow
+1. User types text into the form at `/`.
+2. The page calls `/route`.
+3. The backend returns the best-matching personas and a fallback ranking.
+4. The UI shows either exact matches or ranked suggestions.
 
 ### Phase 1: Vector Router
 ```python
@@ -279,6 +304,12 @@ pytest test_assignment.py
 ### "GROQ_API_KEY not set in .env"
 **Fix:** Add your key from console.groq.com to `.env`
 
+### Vercel build exceeds bundle limit
+**Fix:** Keep `requirements.txt` lean for deployment and use `requirements-full.txt` only for local development.
+
+### Browser demo shows ranked matches instead of exact matches
+**Fix:** That is expected for many inputs. The demo uses fallback rankings so the UI always returns useful output.
+
 ### "get_embedding_dimension not found"
 **Fix:** Update sentence-transformers: `pip install --upgrade sentence-transformers`
 
@@ -291,8 +322,8 @@ pytest test_assignment.py
 ---
 
 ## License
-MIT – Feel free to use for the Grid07 platform!
+MIT – Feel free to use for the  !
 
 ---
 
-*Built for the Grid07 AI Engineering Assignment. Demonstrates LangGraph orchestration, RAG, vector routing, and prompt injection defense.*
+*Built for the   AI Engineering Assignment. Demonstrates LangGraph orchestration, RAG, vector routing, and prompt injection defense.*

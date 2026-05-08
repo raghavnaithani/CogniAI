@@ -112,7 +112,7 @@ def test_phase3():
 
 if __name__ == "__main__":
     print("\n" + "="*70)
-    print("AI COGNITIVE LOOP - Grid07 Assignment Demo")
+    print("AI COGNITIVE LOOP -   Assignment Demo")
     print("(Phase 1 works offline; Phases 2-3 need free Groq API key)")
     print("="*70)
     

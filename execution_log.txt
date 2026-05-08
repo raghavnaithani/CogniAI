@@ -6,7 +6,7 @@ E:\DEVELOPMENT\PROJECTS\ACTIVE\assignment\.venv\Lib\site-packages\langgraph\cach
   from langgraph.checkpoint.serde.jsonplus import JsonPlusSerializer
 
 ======================================================================
-AI COGNITIVE LOOP - Grid07 Assignment Demo
+AI COGNITIVE LOOP -   Assignment Demo
 (Phase 1 works offline; Phases 2-3 need free Groq API key)
 ======================================================================
 

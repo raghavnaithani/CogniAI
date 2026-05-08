@@ -1,17 +1,54 @@
 from fastapi import FastAPI, Query
-from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 import os
 
 app = FastAPI()
 
-# Mount static files at /static and serve the SPA at root
-app.mount("/static", StaticFiles(directory="static"), name="static")
+BASE_DIR = os.path.dirname(__file__)
+STATIC_DIR = os.path.join(BASE_DIR, "static")
+
+# Mount static files at /static and serve the SPA at root.
+app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+
+BOT_PERSONAS = {
+    "bot_a": {
+        "keywords": {"ai", "crypto", "bitcoin", "elon", "space", "technology", "openai"},
+    },
+    "bot_b": {
+        "keywords": {"privacy", "nature", "monopoly", "billionaire", "critical", "social", "capitalism"},
+    },
+    "bot_c": {
+        "keywords": {"markets", "interest", "rates", "trading", "roi", "finance", "stocks"},
+    },
+}
+
+
+def _score_persona(text: str, keywords: set[str]) -> int:
+    lower_text = text.lower()
+    return sum(1 for keyword in keywords if keyword in lower_text)
+
+
+def _rank_bots(text: str) -> list[dict]:
+    ranked = []
+    for bot_id, persona in BOT_PERSONAS.items():
+        raw_score = _score_persona(text, persona["keywords"])
+        score = raw_score / max(1, len(persona["keywords"]))
+        ranked.append(
+            {
+                "bot_id": bot_id,
+                "score": score,
+                "persona": bot_id,
+            }
+        )
+
+    ranked.sort(key=lambda item: item["score"], reverse=True)
+    return ranked
 
 
 @app.get("/")
 def read_index():
-    index_path = os.path.join(os.path.dirname(__file__), "static", "index.html")
+    index_path = os.path.join(STATIC_DIR, "index.html")
     return FileResponse(index_path)
 
 
@@ -22,16 +59,10 @@ def health_check():
 
 @app.get("/route")
 def route_post(text: str = Query(..., description="Text to route to personas")):
-    try:
-        # Import lazily to avoid heavy imports at module import time
-        from ai_cognitive_loop import route_post_to_bots, rank_post_to_bots
-
-        bots = route_post_to_bots(text)
-        ranked = rank_post_to_bots(text)
-        return {
-            "bots": bots,
-            "ranked": ranked,
-            "message": "No exact match above threshold" if not bots else "Matched bots found",
-        }
-    except Exception as exc:
-        return {"error": str(exc)}
+    ranked = _rank_bots(text)
+    bots = [item["bot_id"] for item in ranked if item["score"] >= 0.3]
+    return {
+        "bots": bots,
+        "ranked": ranked,
+        "message": "No exact match above threshold" if not bots else "Matched bots found",
+    }
